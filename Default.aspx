@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="paySite._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#"   MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="paySite._Default" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -38,7 +38,7 @@
                                             <div class="col-md-4 col-md-offset-1" style="left: 0px; top: 0px; width: 225px">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ><b>Currency:</b></asp:Label><br />
-                                                    <asp:DropDownList ID="DropDownList1" CssClass="form-control input-sm" runat="server">
+                                                    <asp:DropDownList ID="currencyTxt" CssClass="form-control input-sm" runat="server">
 
                                                         <asp:ListItem Text="ILS" />
                                                         <asp:ListItem Text="USD" />
@@ -209,8 +209,8 @@
                             <div class="row">
                                 <div class="col-md-10 col-md-offset-1">
                                     <div class="form-group" align="center">
-                                        <asp:Button Text="Pay" ID="btnsave" CssClass="btn btn-primary btn-lg" BackColor="green" Width="220px" runat="server" />
-
+                                        <asp:Button Text="Pay" ID="btnsave" OnClick="alertBox" CssClass="btn btn-primary btn-lg" BackColor="green" Width="220px" runat="server" />
+                                        
                                     </div>
                                 </div>
 
@@ -218,8 +218,12 @@
                             <div class="row">
                                 <div class="col-md-10 col-md-offset-1">
                                     <div class="form-group">
-                                        <div class="table-responsive">
-                                        </div>
+                                        <asp:Panel ID="Panel1" runat="server" Visible="false">
+                                           <p ID="detailsSent"  runat="server"></p>
+                                        </asp:Panel>
+                                        <asp:Panel ID="Panel2" runat="server" Visible="false">
+                                            <p ID="detailsBack"  runat="server"> </p>
+                                        </asp:Panel>
                                     </div>
                                 </div>
                             </div>
@@ -229,9 +233,10 @@
                     </section>
                 </div>
             </div>
+   
+
         </section>
     </section>
-
 
 
 
