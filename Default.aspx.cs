@@ -68,9 +68,9 @@ namespace paySite
             string sSig = SignatureCreate.GenerateSHA256(sendDetail);
             string src = "https://uiservices.coriunder.cloud/hosted/default.aspx?merchantId=" + merchantID + "&trans_type=" + 1 + "&trans_comment="  +
                          "&trans_refNum="  + "&trans_installments=" + trans_installments + "&trans_amount=" + trans_amount + "&trans_currency=" +
-                         trans_currency + "&disp_payFor="  + "&client_email="  + "&client_fullName="  + "&client_phoneNum=" + "&client_billAddress1="  + "&client_billAddress2="  +
-                         "&client_billCity="  + "&client_billZipcode="  + "&client_billState=" +
-                         "&client_billCountry="  + "&PLID="  + "&trans_storePm="  + "&disp_lng=" +
+                         trans_currency + "&disp_payFor="  + "&client_email="+emailTxt.Text  + "&client_fullName="+ fullName.Text + "&client_phoneNum=" + "&client_billAddress1="  + "&client_billAddress2="  +
+                         "&client_billCity="+ addressTxt.Text + "&client_billZipcode="+zipTxt.Text  + "&client_billState=" +
+                         "&client_billCountry="+countryList.Text  + "&PLID="  + "&trans_storePm="  + "&disp_lng=" +
                          "&ui_version="  + "&Brand="  + "&url_redirect="  +
                          "& notification_url=" + "&hashtype="  + "&signature=" + sSig;
 
