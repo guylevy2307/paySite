@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#"   MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="paySite._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#"  Async="true" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="paySite._Default" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -14,6 +14,11 @@
                             </div>
 
                         </header>
+                    <form action=" https://process.coriunder.cloud/member/remote_charge.asp?" 
+                           method="get" 
+                           name="payForm" 
+                           target="fraWindow" 
+                           onsubmit="window.open('', this.target, 'scrollbars=1, width=450, height=500, resizable=0, Status=1');">
                         <div class="panel-body">
                             <h4 align="center">Amount</h4>
                        
@@ -209,7 +214,7 @@
                             <div class="row">
                                 <div class="col-md-10 col-md-offset-1">
                                     <div class="form-group" align="center">
-                                        <asp:Button Text="Pay" ID="btnsave" OnClick="alertBox" CssClass="btn btn-primary btn-lg" BackColor="green" Width="220px" runat="server" />
+                                        <asp:Button Text="Pay" ID="btnsave" OnClick="AlertBoxAsync" CssClass="btn btn-primary btn-lg" BackColor="green" Width="220px" runat="server" />
                                         
                                     </div>
                                 </div>
@@ -230,10 +235,11 @@
 
                         </div>
                         </div>
+                    </form>
                     </section>
                 </div>
             </div>
-   
+     
 
         </section>
     </section>
