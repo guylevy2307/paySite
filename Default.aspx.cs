@@ -26,11 +26,13 @@ namespace paySite
             {
                 System.Security.Cryptography.SHA256 sh = System.Security.Cryptography.SHA256.Create();
                 byte[] hashValue = sh.ComputeHash(System.Text.Encoding.UTF8.GetBytes(value));
-                return System.Convert.ToBase64String(hashValue);
+                return HttpUtility.UrlEncode(System.Convert.ToBase64String(hashValue));
             }
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             countryList.DataSource = CountryList();
             countryList.DataBind();
         }
@@ -42,9 +44,9 @@ namespace paySite
             foreach (CultureInfo itemInfo in getCultureInfos)
             {
                 RegionInfo region=new RegionInfo(itemInfo.LCID);
-                if (!(countryList.Contains(region.EnglishName)))
+                if (!(countryList.Contains(region.TwoLetterISORegionName)))
                 {
-                    countryList.Add(region.EnglishName);
+                    countryList.Add(region.TwoLetterISORegionName);
                 }
             }
             countryList.Sort();
@@ -62,17 +64,18 @@ namespace paySite
            Panel1.Visible = true;
             //creating get request and sent the details
 
-            string merchantID = "3355796", trans_amount = amountTxt.Text, trans_type="1", TypeCredit = "1", trans_currency= currencyTxt.Text;
-            string CardNum = cardNumber.Text, trans_installments="1",RefTransID = "", PersonalHashKey = "7ZIQHB7YYN";
-            string sendDetail = merchantID + 0 + trans_installments + trans_amount + trans_currency + PersonalHashKey;
+            string merchantID = "3355796", transAmount = amountTxt.Text, transType="1", transCurrency= currencyTxt.Text;
+            string CardNum = cardNumber.Text, transInstallments = "1", PersonalHashKey = "7ZIQHB7YYN";
+
+            string sendDetail = merchantID + transType + transInstallments + transAmount + transCurrency+ emailTxt.Text  + fullName.Text
+                                + addressTxt.Text+zipTxt.Text+countryList.Text + PersonalHashKey;
+         
+
             string sSig = SignatureCreate.GenerateSHA256(sendDetail);
-            string src = "https://uiservices.coriunder.cloud/hosted/default.aspx?merchantId=" + merchantID + "&trans_type=" + 1 + "&trans_comment="  +
-                         "&trans_refNum="  + "&trans_installments=" + trans_installments + "&trans_amount=" + trans_amount + "&trans_currency=" +
-                         trans_currency + "&disp_payFor="  + "&client_email="+emailTxt.Text  + "&client_fullName="+ fullName.Text + "&client_phoneNum=" + "&client_billAddress1="  + "&client_billAddress2="  +
-                         "&client_billCity="+ addressTxt.Text + "&client_billZipcode="+zipTxt.Text  + "&client_billState=" +
-                         "&client_billCountry="+countryList.Text  + "&PLID="  + "&trans_storePm="  + "&disp_lng=" +
-                         "&ui_version="  + "&Brand="  + "&url_redirect="  +
-                         "& notification_url=" + "&hashtype="  + "&signature=" + sSig;
+            string src = "https://uiservices.coriunder.cloud/hosted/default.aspx?merchantId=" + merchantID + "&trans_type=" + transType +
+                       "&trans_installments=" + transInstallments + "&trans_amount=" + transAmount + "&trans_currency=" +
+                       transCurrency + "&client_email="+emailTxt.Text  + "&client_fullName="+ fullName.Text +
+                       "&client_billAddress1=" + addressTxt.Text +"&client_billZipcode="+zipTxt.Text  + "&client_billCountry="+countryList.Text  + "&signature=" + sSig;
 
             HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(src);
             webReq.Method = "GET";
@@ -80,8 +83,7 @@ namespace paySite
             {
                 HttpWebResponse webRes = (HttpWebResponse)webReq.GetResponse();
                 StreamReader sr = new StreamReader(webRes.GetResponseStream());
-                String resStr = sr.ReadToEnd();
-                Response.Write("Response String: " + resStr + "<br />");
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "OpenPopupWithHtml('" + sr.ReadToEnd() + "');");
             }
             catch (Exception ex)
             {

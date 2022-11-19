@@ -47,7 +47,7 @@
 
                                                         <asp:ListItem Text="ILS" />
                                                         <asp:ListItem Text="USD" />
-                                                        <asp:ListItem Text="ERU" />
+                                                        <asp:ListItem Text="EUR" />
 
                                                     </asp:DropDownList>
                                                 </div>
@@ -214,7 +214,7 @@
                             <div class="row">
                                 <div class="col-md-10 col-md-offset-1">
                                     <div class="form-group" align="center">
-                                        <asp:Button Text="Pay" ID="btnsave" OnClick="AlertBoxAsync" CssClass="btn btn-primary btn-lg" BackColor="green" Width="220px" runat="server" />
+                                        <asp:Button Text="Pay" runat="server" ID="btnsave" OnClick="AlertBoxAsync" CssClass="btn btn-primary btn-lg" BackColor="green" Width="220px" onsubmit="window.open('', this.target, 'scrollbars=1, width=450, height=500, resizable=0, Status=1')"  />
                                         
                                     </div>
                                 </div>
@@ -239,7 +239,10 @@
                     </section>
                 </div>
             </div>
-     
+        <div runat="server" id="AlertBox" class="alertBox" Visible="false">
+            <div runat="server" id="AlertBoxMessage"></div>
+            <button onclick="closeAlert.call(this, event)">Ok</button>
+        </div>
 
         </section>
     </section>
