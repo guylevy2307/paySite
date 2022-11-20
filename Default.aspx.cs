@@ -65,7 +65,7 @@ namespace paySite
             //creating get request and sent the details
 
             string merchantID = "3355796", transAmount = amountTxt.Text, transType="1", transCurrency= currencyTxt.Text;
-            string CardNum = cardNumber.Text, transInstallments = "1", PersonalHashKey = "7ZIQHB7YYN";
+            string  transInstallments = "1", PersonalHashKey = "7ZIQHB7YYN";
 
             string sendDetail = merchantID + transType + transInstallments + transAmount + transCurrency+ emailTxt.Text  + fullName.Text
                                 + addressTxt.Text+zipTxt.Text+countryList.Text + PersonalHashKey;
@@ -75,7 +75,8 @@ namespace paySite
             string src = "https://uiservices.coriunder.cloud/hosted/default.aspx?merchantId=" + merchantID + "&trans_type=" + transType +
                        "&trans_installments=" + transInstallments + "&trans_amount=" + transAmount + "&trans_currency=" +
                        transCurrency + "&client_email="+emailTxt.Text  + "&client_fullName="+ fullName.Text +
-                       "&client_billAddress1=" + addressTxt.Text +"&client_billZipcode="+zipTxt.Text  + "&client_billCountry="+countryList.Text  + "&signature=" + sSig;
+                       "&client_billAddress1=" + addressTxt.Text +"&client_billZipcode="+zipTxt.Text  + "&client_billCountry="+countryList.Text 
+                       + "&signature=" + sSig;
 
             HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(src);
             webReq.Method = "GET";
@@ -83,7 +84,8 @@ namespace paySite
             {
                 HttpWebResponse webRes = (HttpWebResponse)webReq.GetResponse();
                 StreamReader sr = new StreamReader(webRes.GetResponseStream());
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "OpenPopupWithHtml('" + sr.ReadToEnd() + "');");
+                pnlUserdata.Controls.Add(new LiteralControl(sr.ReadToEnd()));
+
             }
             catch (Exception ex)
             {

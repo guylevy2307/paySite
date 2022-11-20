@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#"  Async="true" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="paySite._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" Debug="true"  Async="true" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="paySite._Default" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -14,12 +14,7 @@
                             </div>
 
                         </header>
-                    <form action=" https://process.coriunder.cloud/member/remote_charge.asp?" 
-                           method="get" 
-                           name="payForm" 
-                           target="fraWindow" 
-                           onsubmit="window.open('', this.target, 'scrollbars=1, width=450, height=500, resizable=0, Status=1');">
-                        <div class="panel-body">
+                           <div class="panel-body">
                             <h4 align="center">Amount</h4>
                        
                         <div class="row">
@@ -149,7 +144,7 @@
                                                 <div class="col-md-4 col-md-offset-1">
                                                     <div class="form-group">
                                                         <asp:Label runat="server" AssociatedControlID="addressTxt"><b>Address:</b></asp:Label><br />
-                                                        <asp:TextBox runat="server"  Enabled="True" name="addressTxt" ID="addressTxt" class="form-control input-sm" placeholder="Address" Width="259px"></asp:TextBox>
+                                                        <asp:TextBox runat="server" required="required"  Enabled="True" name="addressTxt" ID="addressTxt" class="form-control input-sm" placeholder="Address" Width="259px"></asp:TextBox>
 
                                                     </div>
                                                 </div>
@@ -160,7 +155,7 @@
                                                 <div class="col-md-4 col-md-offset-1" style="left: 0px; top: 0px; width: 172px">
                                                     <div class="form-group">
                                                         <asp:Label runat="server" AssociatedControlID="cityTxt"><b>City:</b></asp:Label><br />
-                                                        <asp:TextBox runat="server"   Enabled="True"  name="cityTxt" ID="cityTxt" class="form-control input-sm" placeholder="City"></asp:TextBox>
+                                                        <asp:TextBox runat="server" required="required"   Enabled="True"  name="cityTxt" ID="cityTxt" class="form-control input-sm" placeholder="City"></asp:TextBox>
 
                                                     </div>
                                              
@@ -171,7 +166,7 @@
                                             <div class="col-md-4 col-md-offset-1" style="left: 0px; top: 0px; width: 225px">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" AssociatedControlID="zipTxt" Width="81px"><b>Zip Code:</b></asp:Label><br />
-                                                    <asp:TextBox runat="server" Enabled="True"  name="zipTxt" ID="zipTxt" class="form-control input-sm" placeholder="Zip Code:"></asp:TextBox>
+                                                    <asp:TextBox runat="server" required="required" Enabled="True"  name="zipTxt" ID="zipTxt" class="form-control input-sm" placeholder="Zip Code:"></asp:TextBox>
 
                                                 </div>
                                              
@@ -235,18 +230,13 @@
 
                         </div>
                         </div>
-                    </form>
                     </section>
                 </div>
             </div>
-        <div runat="server" id="AlertBox" class="alertBox" Visible="false">
-            <div runat="server" id="AlertBoxMessage"></div>
-            <button onclick="closeAlert.call(this, event)">Ok</button>
-        </div>
-
+        <asp:Panel runat="server" ID="pnlUserdata">
+        </asp:Panel>
         </section>
     </section>
-
 
 
 
